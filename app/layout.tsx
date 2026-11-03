@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Be_Vietnam_Pro, Bricolage_Grotesque, JetBrains_Mono } from "next/font/google";
 import { Providers } from "@/components/providers";
+import { SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 // Cả 3 font đều có subset `vietnamese`. Bricolage Grotesque và JetBrains Mono là font biến thiên
@@ -28,8 +29,10 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Class Deadline Hub",
+  metadataBase: new URL(SITE_URL),
+  title: { default: SITE_NAME, template: `%s | ${SITE_NAME}` },
   description: "Cổng theo dõi deadline các môn học của lớp.",
+  openGraph: { type: "website", locale: "vi_VN", siteName: SITE_NAME },
 };
 
 export default function RootLayout({
@@ -40,6 +43,12 @@ export default function RootLayout({
   return (
     <html lang="vi" className={`${sans.variable} ${display.variable} ${mono.variable}`}>
       <body className="antialiased">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-[10px] focus:bg-lime focus:px-4 focus:py-3 focus:font-bold focus:text-ink focus:hover:text-ink"
+        >
+          Bỏ qua, đến nội dung chính
+        </a>
         <Providers>{children}</Providers>
       </body>
     </html>
